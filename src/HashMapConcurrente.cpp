@@ -19,7 +19,29 @@ unsigned int HashMapConcurrente::hashIndex(std::string clave) {
 }
 
 void HashMapConcurrente::incrementar(std::string clave) {
-    // Completar (Ejercicio 2)
+    /*
+    unsigned int index = hashIndex(clave);
+    std::mutex &mtx = mutex_per_bucket[index];
+    mtx.lock();
+    
+    ListaAtomica<hashMapPair> *list = tabla[index];
+    
+    bool found = false;
+    for (int i = 0; i < (int)list->longitud(); ++i){
+        hashMapPair par = list[i];
+
+        if (list[i]->first == clave){
+            list[i].second++;
+            found = true;
+        }
+    }
+
+    if (!found){
+        list.insertar(hashMapPair(clave, 1));
+    }
+
+    mtx.unlock();
+    */
 }
 
 std::vector<std::string> HashMapConcurrente::claves() {

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include "lib/littletest.hpp"
 
@@ -28,6 +29,7 @@ LT_BEGIN_TEST(TestsEjercicio1, InsertarAgregaElemento)
     l.insertar(42);
     LT_CHECK_EQ(l.longitud(), 1);
 LT_END_TEST(InsertarAgregaElemento)
+
 
 LT_BEGIN_TEST(TestsEjercicio1, InsertarAgregaElementoCorrecto)
     l.insertar(42);
@@ -133,6 +135,8 @@ LT_BEGIN_TEST(TestsEjercicio2, ClavesEsCorrectoTrasVariasInsercionesDistintoBuck
     LT_CHECK(std::find(actual.begin(), actual.end(), "estegosaurio") != actual.end());
 LT_END_TEST(ClavesEsCorrectoTrasVariasInsercionesDistintoBucket)
 
+/*
+
 // Tests Ejercicio 3
 
 LT_BEGIN_SUITE(TestsEjercicio3)
@@ -223,6 +227,8 @@ LT_BEGIN_TEST(TestsEjercicio4, CargarMultiplesArchivosFuncionaDosThreads)
     LT_CHECK_EQ(hM.valor("estegosaurio"), 4);
     LT_CHECK_EQ(hM.claves().size(), 12);
 LT_END_TEST(CargarMultiplesArchivosFuncionaDosThreads)
+
+*/
 
 // Ejecutar tests
 LT_BEGIN_AUTO_TEST_ENV()

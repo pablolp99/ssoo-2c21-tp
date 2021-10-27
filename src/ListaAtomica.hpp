@@ -3,6 +3,8 @@
 
 #include <atomic>
 #include <cstddef>
+#include <mutex>
+#include <string>
 
 template<typename T>
 class ListaAtomica {
@@ -15,6 +17,7 @@ class ListaAtomica {
     };
 
     std::atomic<Nodo *> _cabeza;
+    std::mutex mtx;
 
  public:
     ListaAtomica() : _cabeza(nullptr) {}
@@ -30,7 +33,17 @@ class ListaAtomica {
     }
 
     void insertar(const T &valor) {
-        // Completar (Ejercicio 1)
+        // Ejercicio 1
+        // Bloqueamos el mutex
+        // Creamos un nodo nuevo
+        mtx.lock();
+        Nodo *n = new Nodo(valor);
+        if (longitud() != 0){
+            n->_siguiente = _cabeza.load();
+        }
+         _cabeza = n;
+        // Desbloqueamos el mutex
+        mtx.unlock();
     }
 
     T& operator[](size_t i) const {
@@ -102,6 +115,7 @@ class ListaAtomica {
     iterator end() { 
         return iterator(this, nullptr);
     }
+
 };
 
 #endif /* LISTA_ATOMICA_HPP */
