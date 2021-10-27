@@ -44,10 +44,28 @@ void HashMapConcurrente::incrementar(std::string clave) {
 
 std::vector<std::string> HashMapConcurrente::claves() {
     // Completar (Ejercicio 2)
+    std::vector<std::string> result;
+    for (int i = 0; i < 26; i++){
+        ListaAtomica<hashMapPair> *list = tabla[i];
+        for (auto it = list->begin(); it != list->end(); it++){
+            auto obj = *it;
+            result.push_back(obj.first);
+        }
+    }
+    return result;
 }
 
 unsigned int HashMapConcurrente::valor(std::string clave) {
     // Completar (Ejercicio 2)
+    unsigned int index = hashIndex(clave);
+    ListaAtomica<hashMapPair> *list = tabla[index];
+    for (auto it = list->begin(); it != list->end(); it++){
+        auto obj = *it;
+        if (obj.first == clave){
+            return obj.second;
+        }
+    }
+    return 0;
 }
 
 hashMapPair HashMapConcurrente::maximo() {
