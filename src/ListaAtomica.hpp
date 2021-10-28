@@ -33,16 +33,12 @@ class ListaAtomica {
     }
 
     void insertar(const T &valor) {
-        // Ejercicio 1
-        // Bloqueamos el mutex
-        // Creamos un nodo nuevo
         mtx.lock();
         Nodo *n = new Nodo(valor);
         if (longitud() != 0){
             n->_siguiente = _cabeza.load();
         }
          _cabeza = n;
-        // Desbloqueamos el mutex
         mtx.unlock();
     }
 

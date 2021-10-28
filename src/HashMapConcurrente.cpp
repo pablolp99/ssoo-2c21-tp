@@ -24,13 +24,13 @@ void HashMapConcurrente::incrementar(std::string clave) {
     mtx.lock();
     
     ListaAtomica<hashMapPair> *list = tabla[index];
-    
     bool found = false;
 
     for (auto it = list->begin(); it != list->end(); it++){
         auto obj = *it;
         if (obj.first == clave){
-            obj.second++;
+            hashMapPair new_pair = { clave, obj.second + 1 };
+            *it = new_pair;
             found = true;
         }
     }
@@ -43,7 +43,6 @@ void HashMapConcurrente::incrementar(std::string clave) {
 }
 
 std::vector<std::string> HashMapConcurrente::claves() {
-    // Completar (Ejercicio 2)
     std::vector<std::string> result;
     for (int i = 0; i < 26; i++){
         ListaAtomica<hashMapPair> *list = tabla[i];
@@ -56,7 +55,6 @@ std::vector<std::string> HashMapConcurrente::claves() {
 }
 
 unsigned int HashMapConcurrente::valor(std::string clave) {
-    // Completar (Ejercicio 2)
     unsigned int index = hashIndex(clave);
     ListaAtomica<hashMapPair> *list = tabla[index];
     for (auto it = list->begin(); it != list->end(); it++){

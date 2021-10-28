@@ -32,3 +32,6 @@
 *.app
 
 build/
+.gdb_history
+.vscode/
+
