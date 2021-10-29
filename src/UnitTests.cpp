@@ -135,7 +135,6 @@ LT_BEGIN_TEST(TestsEjercicio2, ClavesEsCorrectoTrasVariasInsercionesDistintoBuck
     LT_CHECK(std::find(actual.begin(), actual.end(), "estegosaurio") != actual.end());
 LT_END_TEST(ClavesEsCorrectoTrasVariasInsercionesDistintoBucket)
 
-/*
 
 // Tests Ejercicio 3
 
@@ -191,6 +190,7 @@ LT_BEGIN_TEST(TestsEjercicio3, MaximoParaleloEsCorrectoDosThreads)
     LT_CHECK_EQ(actual.second, 4);
 LT_END_TEST(MaximoParaleloEsCorrectoDosThreads)
 
+/*
 // Tests Ejercicio 4
 
 LT_BEGIN_SUITE(TestsEjercicio4)
