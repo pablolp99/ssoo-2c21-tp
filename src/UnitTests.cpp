@@ -190,7 +190,6 @@ LT_BEGIN_TEST(TestsEjercicio3, MaximoParaleloEsCorrectoDosThreads)
     LT_CHECK_EQ(actual.second, 4);
 LT_END_TEST(MaximoParaleloEsCorrectoDosThreads)
 
-/*
 // Tests Ejercicio 4
 
 LT_BEGIN_SUITE(TestsEjercicio4)
@@ -228,7 +227,6 @@ LT_BEGIN_TEST(TestsEjercicio4, CargarMultiplesArchivosFuncionaDosThreads)
     LT_CHECK_EQ(hM.claves().size(), 12);
 LT_END_TEST(CargarMultiplesArchivosFuncionaDosThreads)
 
-*/
 
 // Ejecutar tests
 LT_BEGIN_AUTO_TEST_ENV()

@@ -104,7 +104,13 @@ hashMapPair HashMapConcurrente::maximoParalelo(unsigned int cant_threads) {
     max->second = 0;
 
     for (unsigned int i = 0; i < cant_threads; ++i) {
-        threads[i] = std::thread(HashMapConcurrente::maximoThread, this, &next_row_max, max, &mtx_global_max);
+        threads[i] = std::thread(
+            HashMapConcurrente::maximoThread, 
+            this, 
+            &next_row_max, 
+            max, 
+            &mtx_global_max
+        );
     }
 
     for (unsigned int i = 0; i < cant_threads; ++i) {
@@ -114,7 +120,12 @@ hashMapPair HashMapConcurrente::maximoParalelo(unsigned int cant_threads) {
     return *max;
 }
 
-void HashMapConcurrente::maximoThread(void *hash_map, std::atomic<int> *row, hashMapPair *global_max, std::mutex *mtx_global_max) {
+void HashMapConcurrente::maximoThread(
+    void *hash_map, 
+    std::atomic<int> *row, 
+    hashMapPair *global_max, 
+    std::mutex *mtx_global_max
+) {
     // this
     HashMapConcurrente * hashMap = (HashMapConcurrente*)hash_map;
 
