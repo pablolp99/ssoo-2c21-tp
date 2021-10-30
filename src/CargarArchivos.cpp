@@ -43,9 +43,9 @@ void cargarArchivoThread(
     std::atomic<int> *idx,
     unsigned int cantThreads
 ) {
-    int current_idx;  
-    while ((current_idx = (*idx)++) < cantThreads) {
-        cargarArchivo(hashMap, filePaths[current_idx]);      
+    int current_idx;
+    while ((unsigned int) (current_idx = (*idx)++) < cantThreads) {
+        cargarArchivo(hashMap, filePaths[current_idx]);   
     }
 }
 
@@ -58,13 +58,13 @@ void cargarMultiplesArchivos(
     std::atomic<int> next_file_idx{0};
 
     for (unsigned int i = 0; i < cantThreads; ++i) {
-        threads[i] = std::thread(
+        threads[i] = (std::thread(
             cargarArchivoThread,
-            hashMap,
-            filePaths, 
-            &next_file_idx, 
+            std::ref(hashMap),
+            filePaths,
+            &next_file_idx,
             cantThreads
-        );
+        ));
     }
 
     for (unsigned int i = 0; i < cantThreads; ++i) {
