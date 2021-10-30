@@ -23,10 +23,19 @@ int cargarArchivo(
         std::cerr << "Error al abrir el archivo '" << filePath << "'" << std::endl;
         return -1;
     }
+
     while (file >> palabraActual) {
         hashMap.incrementar(palabraActual);
         cant++;
+        // std::cout<<".-.-.-.-.-.-.-.-.."<<std::endl;
+
+        // std::vector<std::string> keys = hashMap.claves();
+        // for(int i = 0; i<keys.size(); ++i){
+        //         std::cout<<keys[i]<<" - "<<hashMap.valor(keys[i])<<std::endl;
+        // }
     }
+
+    
     // Cierro el archivo.
     if (!file.eof()) {
         std::cerr << "Error al leer el archivo" << std::endl;
@@ -44,7 +53,7 @@ void cargarArchivoThread(
     unsigned int cantThreads
 ) {
     int current_idx;
-    while ((unsigned int) (current_idx = (*idx)++) < cantThreads) {
+    while ((unsigned int) (current_idx = (*idx)++) < filePaths.size()) {
         cargarArchivo(hashMap, filePaths[current_idx]);   
     }
 }
