@@ -27,12 +27,6 @@ int cargarArchivo(
     while (file >> palabraActual) {
         hashMap.incrementar(palabraActual);
         cant++;
-        // std::cout<<".-.-.-.-.-.-.-.-.."<<std::endl;
-
-        // std::vector<std::string> keys = hashMap.claves();
-        // for(int i = 0; i<keys.size(); ++i){
-        //         std::cout<<keys[i]<<" - "<<hashMap.valor(keys[i])<<std::endl;
-        // }
     }
 
     
