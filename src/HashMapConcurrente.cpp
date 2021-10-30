@@ -97,48 +97,32 @@ hashMapPair HashMapConcurrente::maximo() {
 hashMapPair HashMapConcurrente::maximoParalelo(unsigned int cant_threads) {
     // Completar (Ejercicio 3)
     // no tiene sentido tener mas threads que filas en el hashmap?
+    
     std::thread threads[cant_threads];
-    std::atomic<int> next_row_max{0};
-    std::mutex mtx_global_max;
-    hashMapPair *max = new hashMapPair();
-    max->second = 0;
+    global_max.second = 0;
 
     for (unsigned int i = 0; i < cant_threads; ++i) {
-        threads[i] = std::thread(
-            HashMapConcurrente::maximoThread, 
-            this, 
-            &next_row_max, 
-            max, 
-            &mtx_global_max
-        );
+        threads[i] = std::thread(&HashMapConcurrente::maximoThread, this);
     }
 
     for (unsigned int i = 0; i < cant_threads; ++i) {
         threads[i].join();
     }
     
-    return *max;
+    return global_max;
 }
 
-void HashMapConcurrente::maximoThread(
-    void *hash_map, 
-    std::atomic<int> *row, 
-    hashMapPair *global_max, 
-    std::mutex *mtx_global_max
-) {
-    // this
-    HashMapConcurrente * hashMap = (HashMapConcurrente*)hash_map;
-
+void HashMapConcurrente::maximoThread() {
     hashMapPair *thread_max = new hashMapPair();
     thread_max->second = 0;
 
-    // *row al ser atomic int devuelve valor actual e incrementa 1
+    // next_row_max al ser atomic int devuelve valor actual e incrementa 1
     // se comparte con los otros threads y nunca dos threads van a obtener 
     // el mismo valor
     int current_row;  
-    while ((current_row = (*row)++) < 26) {
+    while ((current_row = (next_row_max)++) < 26) {
         // calculo maximo de la fila
-        for (auto &p : *hashMap->tabla[current_row]) {
+        for (auto &p : *tabla[current_row]) {
             if (p.second > thread_max->second) {
                 thread_max->first = p.first;
                 thread_max->second = p.second;
@@ -148,12 +132,12 @@ void HashMapConcurrente::maximoThread(
 
     // piso el maximo calculado por el thread en las filas qque proceso
     // en la variable compartida con los demas threads
-    (*mtx_global_max).lock();
-    if (global_max->second < thread_max->second) {
-        global_max->first = thread_max->first;
-        global_max->second = thread_max->second;
+    mtx_global_max.lock();
+    if (global_max.second < thread_max->second) {
+        global_max.first = thread_max->first;
+        global_max.second = thread_max->second;
     }
-    (*mtx_global_max).unlock();
+    mtx_global_max.unlock();
 }
 
 #endif
