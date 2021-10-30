@@ -135,7 +135,6 @@ LT_BEGIN_TEST(TestsEjercicio2, ClavesEsCorrectoTrasVariasInsercionesDistintoBuck
     LT_CHECK(std::find(actual.begin(), actual.end(), "estegosaurio") != actual.end());
 LT_END_TEST(ClavesEsCorrectoTrasVariasInsercionesDistintoBucket)
 
-/*
 
 // Tests Ejercicio 3
 
@@ -191,7 +190,7 @@ LT_BEGIN_TEST(TestsEjercicio3, MaximoParaleloEsCorrectoDosThreads)
     LT_CHECK_EQ(actual.second, 4);
 LT_END_TEST(MaximoParaleloEsCorrectoDosThreads)
 
-// Tests Ejercicio 4
+// // Tests Ejercicio 4
 
 LT_BEGIN_SUITE(TestsEjercicio4)
 
@@ -213,7 +212,7 @@ LT_BEGIN_TEST(TestsEjercicio4, CargarArchivoFunciona)
 LT_END_TEST(CargarArchivoFunciona)
 
 LT_BEGIN_TEST(TestsEjercicio4, CargarMultiplesArchivosFuncionaUnThread)
-    cargarMultiplesArchivos(hM, 1, {"data/test-1", "data/test-2", "data/test-3"});
+    cargarMultiplesArchivos(hM, 2, {"data/test-1", "data/test-2", "data/test-3"});
     LT_CHECK_EQ(hM.valor("tiranosaurio"), 2);
     LT_CHECK_EQ(hM.valor("linux"), 3);
     LT_CHECK_EQ(hM.valor("estegosaurio"), 4);
@@ -228,7 +227,6 @@ LT_BEGIN_TEST(TestsEjercicio4, CargarMultiplesArchivosFuncionaDosThreads)
     LT_CHECK_EQ(hM.claves().size(), 12);
 LT_END_TEST(CargarMultiplesArchivosFuncionaDosThreads)
 
-*/
 
 // Ejecutar tests
 LT_BEGIN_AUTO_TEST_ENV()

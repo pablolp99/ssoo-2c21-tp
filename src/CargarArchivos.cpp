@@ -4,7 +4,8 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include <pthread.h>
+// #include <pthread.h>
+#include <thread>
 
 #include "CargarArchivos.hpp"
 
@@ -22,10 +23,13 @@ int cargarArchivo(
         std::cerr << "Error al abrir el archivo '" << filePath << "'" << std::endl;
         return -1;
     }
+
     while (file >> palabraActual) {
-        // Completar (Ejercicio 4)
+        hashMap.incrementar(palabraActual);
         cant++;
     }
+
+    
     // Cierro el archivo.
     if (!file.eof()) {
         std::cerr << "Error al leer el archivo" << std::endl;
@@ -36,13 +40,39 @@ int cargarArchivo(
     return cant;
 }
 
+void cargarArchivoThread(
+    HashMapConcurrente &hashMap,
+    std::vector<std::string> filePaths,
+    std::atomic<int> *idx,
+    unsigned int cantThreads
+) {
+    int current_idx;
+    while ((unsigned int) (current_idx = (*idx)++) < filePaths.size()) {
+        cargarArchivo(hashMap, filePaths[current_idx]);   
+    }
+}
 
 void cargarMultiplesArchivos(
     HashMapConcurrente &hashMap,
     unsigned int cantThreads,
     std::vector<std::string> filePaths
 ) {
-    // Completar (Ejercicio 4)
+    std::thread threads[cantThreads];
+    std::atomic<int> next_file_idx{0};
+
+    for (unsigned int i = 0; i < cantThreads; ++i) {
+        threads[i] = (std::thread(
+            cargarArchivoThread,
+            std::ref(hashMap),
+            filePaths,
+            &next_file_idx,
+            cantThreads
+        ));
+    }
+
+    for (unsigned int i = 0; i < cantThreads; ++i) {
+        threads[i].join();
+    }
 }
 
 #endif
