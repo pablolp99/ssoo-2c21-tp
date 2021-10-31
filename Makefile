@@ -1,11 +1,13 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall
 LDFLAGS = -lpthread
+EXPFLAGS = -lrt
 
 BUILD_DIR = ./build
 
 TARGET = ContarPalabras
 TEST_TARGET = UnitTests
+EXPERIMENTS_TARGET = Experimentation
 
 OBJECTS = HashMapConcurrente.o CargarArchivos.o
 
@@ -13,6 +15,9 @@ all: build $(BUILD_DIR)/$(TARGET)
 
 test: build $(BUILD_DIR)/$(TEST_TARGET)
 	$(BUILD_DIR)/$(TEST_TARGET)
+
+experiments: CXXFLAGS += $(EXPFLAGS)
+experiments: build $(BUILD_DIR)/$(EXPERIMENTS_TARGET) 
 
 $(BUILD_DIR)/%.o: src/%.cpp
 	@mkdir -p $(@D)
