@@ -4,12 +4,12 @@
 #include "HashMapConcurrente.hpp"
 #include "CargarArchivos.hpp"
 
-#define TOTAL_THREADS 9
+#define TOTAL_THREADS 10
 
 void experiment(std::string file_path){
     // Run functions with:
     // 1, 2, 4, 8, 16, 26, 32 and 64 threads
-    int threads[TOTAL_THREADS] = { 1, 2, 4, 8, 16, 26, 32, 48, 64 };
+    int threads[TOTAL_THREADS] = { 1, 2, 4, 8, 12, 16, 26, 32, 48, 64 };
 
     std::cout << "thread_count,id,time,function,file_count" << std::endl;
 
