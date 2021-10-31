@@ -27,14 +27,9 @@ class HashMapConcurrente {
  private:
     ListaAtomica<hashMapPair> *tabla[HashMapConcurrente::cantLetras];
 
-    unsigned int hashIndex(std::string clave);
-    void maximoThread();
+    static unsigned int hashIndex(std::string clave);
+    static void maximoThread(void *hash_map, std::atomic<int> *row, hashMapPair *global_max, std::mutex *mtx_global_max);
     std::array<std::mutex, 26> mutex_per_bucket;
-
-    // Para maximo
-    std::atomic<int> next_row_max{0};
-    std::mutex mtx_global_max;
-    hashMapPair global_max;
 };
 
 #endif  /* HMC_HPP */
