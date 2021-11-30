@@ -102,6 +102,11 @@ hashMapPair HashMapConcurrente::maximoParalelo(unsigned int cant_threads) {
     std::mutex mtx_global_max;
     hashMapPair *max = new hashMapPair();
     max->second = 0;
+    
+     // bloqueo inserción todas las filas (toda la tabla)
+    for (unsigned int i = 0; i < 26; ++i) {
+        mutex_per_bucket[i].lock();
+    }
 
     for (unsigned int i = 0; i < cant_threads; ++i) {
         threads[i] = std::thread(
@@ -115,6 +120,11 @@ hashMapPair HashMapConcurrente::maximoParalelo(unsigned int cant_threads) {
 
     for (unsigned int i = 0; i < cant_threads; ++i) {
         threads[i].join();
+    }
+    
+    // desbloqueo inserción todas las filas (toda la tabla)
+    for (unsigned int i = 0; i < 26; ++i) {
+        mutex_per_bucket[i].unlock();
     }
     
     return *max;
